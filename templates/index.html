@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Users</title>
+</head>
+<body>
+    <h1>Data Users</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nama</th>
+            <th>Email</th>
+            <th>Aksi</th>
+        </tr>
+        {% for row in data %}
+        <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+            <td>
+                <a href="{{ url_for('update', id=row[0]) }}">Update</a>
+                <a href="{{ url_for('delete', id=row[0]) }}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p><a href="{{ url_for('create') }}">Buat data baru</a></p>
+</body>
+</html>
