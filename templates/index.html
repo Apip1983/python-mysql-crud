@@ -1,30 +1,75 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Data Users</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Data Users</h1>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Nama</th>
-            <th>Email</th>
-            <th>Aksi</th>
-        </tr>
-        {% for row in data %}
-        <tr>
-            <td>{{ row[0] }}</td>
-            <td>{{ row[1] }}</td>
-            <td>{{ row[2] }}</td>
-            <td>
-                <a href="{{ url_for('update', id=row[0]) }}">Update</a>
-                <a href="{{ url_for('delete', id=row[0]) }}">Delete</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    <p><a href="{{ url_for('create') }}">Buat data baru</a></p>
+    <div class="container">
+        <h1>Data Users</h1>
+        <table id="data-users" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Umur</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="data-body">
+                {% for row in data %}
+                <tr>
+                    <td>{{ row[0] }}</td>
+                    <td>{{ row[1] }}</td>
+                    <td>{{ row[2] }}</td>
+                    <td>{{ row[3] }}</td>
+                    <td>
+                        <a href="{{ url_for('update', id=row[0]) }}">Update</a>
+                        <a href="{{ url_for('delete', id=row[0]) }}">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Create New User</h2>
+        <form action="{{ url_for('create') }}" method="post">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="umur">Umur:</label>
+                <input type="number" class="form-control" id="umur" name="umur" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+
+        {% if data_update %}
+        <h2>Update User</h2>
+        <form action="{{ url_for('update', id=data_update[0]) }}" method="post">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ data_update[1] }}" required>
+            </div>
+            <div class="form-group">
+                <label for="umur">Umur:</label>
+                <input type="number" class="form-control" id="umur" name="umur" value="{{ data_update[2] }}" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{ data_update[3] }}" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+        {% endif %}
+    </div>
 </body>
 </html>

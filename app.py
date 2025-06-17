@@ -7,7 +7,7 @@ app = Flask(__name__)
 db = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="password",
+    password="password_baru",
     database="employee"
 )
 
@@ -33,7 +33,7 @@ def create():
         cursor.execute(query, (name, umur, email))
         db.commit()
         return redirect(url_for("index"))
-    return render_template("create.html")
+    
 
 # Route untuk mengupdate data
 @app.route("/update/<id>", methods=["GET", "POST"])
@@ -49,7 +49,10 @@ def update(id):
     query = "SELECT * FROM users WHERE id = %s"
     cursor.execute(query, (id,))
     result = cursor.fetchone()
-    return render_template("update.html", data=result)
+    query = "SELECT * FROM users"
+    cursor.execute(query)
+    results = cursor.fetchall()
+    return render_template("index.html", data=results, data_update=result)
 
 # Route untuk menghapus data
 @app.route("/delete/<id>")
